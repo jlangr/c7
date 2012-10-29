@@ -23,7 +23,7 @@ HoldingService::~HoldingService()
 
 void HoldingService::DeleteAll()
 {
-	Catalog::DeleteAll();
+   Catalog::DeleteAll();
 }
 
 unsigned int HoldingService::InventorySize() const
@@ -33,7 +33,7 @@ unsigned int HoldingService::InventorySize() const
 
 void HoldingService::FindByClassification(const string& classification, set<Holding>& holdings) const
 {
-	mCatalog.FindByClassification(classification, holdings);
+   mCatalog.FindByClassification(classification, holdings);
 }
 
 bool HoldingService::ExistsWithBarcode(const std::string& barCode) const
@@ -50,7 +50,7 @@ bool HoldingService::IsAvailable(const std::string& barCode) const
 
 bool HoldingService::FindByBarCode(Holding& holding) const
 {
-	return mCatalog.FindByBarCode(holding);
+   return mCatalog.FindByBarCode(holding);
 }
 
 void HoldingService::AddAtBranch(const string& id, const string& barcode) 
@@ -65,8 +65,8 @@ void HoldingService::AddAtBranch(const string& id, const string& barcode)
 
 void HoldingService::Transfer(Holding& holding, Branch& branch)
 {
-	holding.Transfer(branch);
-	mCatalog.Update(holding);
+   holding.Transfer(branch);
+   mCatalog.Update(holding);
 }
 
 void HoldingService::Transfer(const string& barCode, const string& branchId)
@@ -82,89 +82,87 @@ void HoldingService::Transfer(const string& barCode, const string& branchId)
 
 void HoldingService::CheckOut(const string& patronCardNumber, const string& barCode, date date)
 {
-	Holding holding(barCode);
-	FindByBarCode(holding);
-	holding.CheckOut(date);
-	mCatalog.Update(holding);
+   Holding holding(barCode);
+   FindByBarCode(holding);
+   holding.CheckOut(date);
+   mCatalog.Update(holding);
 
-	Patron patron("", patronCardNumber);
+   Patron patron("", patronCardNumber);
     mPatronService.Find(patron);
 
     patron.Borrow(holding);
     mPatronService.Update(patron);
 }
 
+// START:CheckIn
 void HoldingService::CheckIn(const string& barCode, date date, const string& branchId)
 {
-    Branch branch(branchId);
-    mBranchService.Find(branch);
+   Branch branch(branchId);
+   mBranchService.Find(branch);
 
-    Holding hld(barCode);
-	FindByBarCode(hld);
+   Holding holding(barCode);
+   FindByBarCode(holding);
 
-	vector<Patron> patrons;
+   holding.CheckIn(date, branch);
+   mCatalog.Update(holding);
 
-	// set the holding to returned status
-	set<Holding> holdings;
-	hld.CheckIn(date, branch);
-	mCatalog.Update(hld);
+   Patron patronWithBook = FindPatron(holding);
 
-	patrons = mPatronService.GetAll();
+   patronWithBook.ReturnHolding(holding);
 
-	Holding patHld; 
-      
-	// locate the patron with the checked out book
-	// could introduce a patron reference ID in the holding...
-	Patron f;
-	Patron p;
-	vector<Patron>::const_iterator it;
-	for (it = patrons.begin(); 
-			it != patrons.end();
-			it++) 
-    {
-		p = *it;
-		holdings = p.Holdings();
-		set<Holding>::const_iterator it1;
-		for (it1 = holdings.begin(); it1 != holdings.end(); it1++) 
-        {
-			patHld = *it1;
-			if (hld.Classification() == patHld.Classification())
-	        
-            f = p;
-		}
-	}
+   if (IsLate(holding, date)) 
+      ApplyFine(patronWithBook, holding);
 
-  	// remove the book from the patron
-	f.ReturnHolding(hld);
-
-	// check for late returns
-	bool isLate = false;
-
-	if (date > hld.DueDate()) // is it late?
-		isLate = true;
-
-	if (isLate) {
-		int daysLate = 1; // calculate # of days past due
-
-        ClassificationService service;
-        Book book = service.RetrieveDetails(hld.Classification());
-
-		switch (book.Type()) {
-			case Book::TYPE_BOOK:
-				f.AddFine(Book::BOOK_DAILY_FINE * daysLate); 
-				break;
-			case Book::TYPE_MOVIE:
-				{
-					int fine = 100 + Book::MOVIE_DAILY_FINE * daysLate;
-					if (fine > 1000)
-						fine = 1000;
-					f.AddFine(fine);
-				}
-				break;
-			case Book::TYPE_NEW_RELEASE:
-				f.AddFine(Book::NEW_RELEASE_DAILY_FINE * daysLate);
-				break;
-		}
-	}
-	mPatronService.Update(f);
+   mPatronService.Update(patronWithBook);
 }
+// END:CheckIn
+
+// START:ApplyFine
+void HoldingService::ApplyFine(Patron& patronWithHolding, Holding& holding)
+{
+   int daysLate = CalculateDaysPastDue(holding);
+
+   ClassificationService service;
+   Book book = service.RetrieveDetails(holding.Classification());
+
+   switch (book.Type()) {
+      case Book::TYPE_BOOK:
+         patronWithHolding.AddFine(Book::BOOK_DAILY_FINE * daysLate); 
+         break;
+      case Book::TYPE_MOVIE:
+         {
+            int fine = 100 + Book::MOVIE_DAILY_FINE * daysLate;
+            if (fine > 1000)
+               fine = 1000;
+            patronWithHolding.AddFine(fine);
+         }
+         break;
+      case Book::TYPE_NEW_RELEASE:
+         patronWithHolding.AddFine(Book::NEW_RELEASE_DAILY_FINE * daysLate);
+         break;
+   }
+}
+// END:ApplyFine
+
+unsigned int HoldingService::CalculateDaysPastDue(Holding& holding)
+{
+   return 1; // TODO
+}
+
+bool HoldingService::IsLate(Holding& holding, date& date)
+{
+   return date > holding.DueDate();
+}
+
+Patron HoldingService::FindPatron(Holding& holding)
+{
+   for (Patron& patron: mPatronService.GetAll())
+   {
+      set<Holding> holdings = patron.Holdings();
+      for (const Holding& patronHolding: holdings)
+         if (holding.Classification() == patronHolding.Classification())
+            return patron;
+   }
+   return Patron();
+}
+

@@ -18,15 +18,17 @@ class HoldingTest: public Test
 public:
    Holding* holding;
    static const date ArbitraryDate;
-   static const Branch ArbitraryBranch;
+   Branch* arbitraryBranch;
    virtual void SetUp()
    {
       holding = new Holding(THE_TRIAL_CLASSIFICATION, 1);
+      arbitraryBranch = new Branch(EAST_BRANCH);
    }
 
    virtual void TearDown()
    {
       delete holding;
+      delete arbitraryBranch;
    }
 
    void VerifyAvailability(const Branch& branch)
@@ -48,7 +50,6 @@ public:
 };
 
 const date HoldingTest::ArbitraryDate(2013, Jan, 1);
-const Branch HoldingTest::ArbitraryBranch(EAST_BRANCH);
 
 TEST_F(HoldingTest, BarcodeRequiresColon)
 {
@@ -229,7 +230,7 @@ public:
 TEST_F(ACheckedInHolding, UpdatesDateDueOnCheckout)
 {
 //START_HIGHLIGHT
-   ASSERT_THAT(IsAvailableAt(holding, ArbitraryBranch), Eq(true));
+   ASSERT_THAT(IsAvailableAt(holding, *arbitraryBranch), Eq(true));
 //END_HIGHLIGHT
    holding->CheckOut(ArbitraryDate);
 

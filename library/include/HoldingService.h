@@ -39,8 +39,13 @@ private:
 	HoldingService(const HoldingService&);
 	HoldingService& operator=(const HoldingService&);
 
+   Patron FindPatron(Holding&);
+   bool IsLate(Holding&, boost::gregorian::date& checkinDate);
+   void ApplyFine(Patron&, Holding&);
+   unsigned int CalculateDaysPastDue(Holding& holding);
+
 	PatronService mPatronService;
-    BranchService mBranchService;
+   BranchService mBranchService;
 	Catalog mCatalog;
 };
 }

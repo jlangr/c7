@@ -1,4 +1,3 @@
-project(chapter7)
 cmake_minimum_required(VERSION 2.6)
 
 include_directories(include ~/boost_1_51_0)

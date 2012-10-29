@@ -1,4 +1,3 @@
-project(chapter3)
 cmake_minimum_required(VERSION 2.6)
 
 include_directories(/home/jlangr/gmock-1.6.0/include /home/jlangr/gmock-1.6.0/gtest/include ~/boost_1_51_0 ../library/include)
