@@ -226,7 +226,9 @@ public:
 //START:UpdatesDateDueOnCheckout
 TEST_F(ACheckedInHolding, UpdatesDateDueOnCheckout)
 {
+//START_HIGHLIGHT
    ASSERT_THAT(IsAvailableAt(holding, ArbitraryBranch), Eq(true));
+//END_HIGHLIGHT
    holding->CheckOut(ArbitraryDate);
 
    ASSERT_THAT(holding->DueDate(),
