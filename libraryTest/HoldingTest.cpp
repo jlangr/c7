@@ -18,6 +18,7 @@ class HoldingTest: public Test
 public:
    Holding* holding;
    static const date ArbitraryDate;
+   static const Branch ArbitraryBranch;
    virtual void SetUp()
    {
       holding = new Holding(THE_TRIAL_CLASSIFICATION, 1);
@@ -31,7 +32,7 @@ public:
    void VerifyAvailability(const Branch& branch)
    {
       ASSERT_THAT(holding->CurrentBranch(), Eq(branch));
-        ASSERT_THAT(holding->IsAvailable(), Eq(branch != Branch::CHECKED_OUT));
+      ASSERT_THAT(holding->IsAvailable(), Eq(branch != Branch::CHECKED_OUT));
    }
 
     bool IsAvailableAt(Holding* holding, Branch& branch) 
@@ -47,6 +48,7 @@ public:
 };
 
 const date HoldingTest::ArbitraryDate(2013, Jan, 1);
+const Branch HoldingTest::ArbitraryBranch(EAST_BRANCH);
 
 TEST_F(HoldingTest, BarcodeRequiresColon)
 {
@@ -103,7 +105,7 @@ TEST_F(HoldingTest, AssignmentCopiesAllMembers)
 
    ASSERT_THAT(newHolding.Classification(), Eq(THE_TRIAL_CLASSIFICATION));
    ASSERT_THAT(newHolding.CopyNumber(), Eq(holding->CopyNumber()));
-    ASSERT_THAT(IsAvailableAt(&newHolding, EAST_BRANCH), Eq(true));
+   ASSERT_THAT(IsAvailableAt(&newHolding, EAST_BRANCH), Eq(true));
 }
 
 TEST_F(HoldingTest, TransferMakesHoldingAvailableAtBranch)
@@ -183,7 +185,6 @@ TEST_F(HoldingTest, ck)
    ASSERT_THAT(holding->DueDate(), Eq(expectedDue));
 }
 
-// START:Availability
 TEST_F(HoldingTest, Availability)
 {
    holding->Transfer(EAST_BRANCH);
@@ -194,7 +195,6 @@ TEST_F(HoldingTest, Availability)
    holding->CheckIn(nextDay, EAST_BRANCH);
    EXPECT_THAT(holding->IsAvailable(), Eq(true));
 }
-// END:Availability
 
 TEST_F(HoldingTest, UnavailableOnCheckout)
 {
@@ -213,6 +213,26 @@ TEST_F(HoldingTest, UpdatesCheckoutDateOnCheckout)
 
     ASSERT_THAT(holding->LastCheckedOutOn(), Eq(ArbitraryDate));
 }
+
+class ACheckedInHolding: public HoldingTest
+{
+public:
+   void SetUp() {
+      HoldingTest::SetUp();
+      MakeAvailableAtABranch(holding);
+   }
+};
+
+//START:UpdatesDateDueOnCheckout
+TEST_F(ACheckedInHolding, UpdatesDateDueOnCheckout)
+{
+   ASSERT_THAT(IsAvailableAt(holding, ArbitraryBranch), Eq(true));
+   holding->CheckOut(ArbitraryDate);
+
+   ASSERT_THAT(holding->DueDate(),
+      Eq(ArbitraryDate + date_duration(Book::BOOK_CHECKOUT_PERIOD)));
+}
+//END:UpdatesDateDueOnCheckout
 
 TEST_F(HoldingTest, UpdatesDateDueOnCheckout)
 {
