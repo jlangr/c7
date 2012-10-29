@@ -188,11 +188,11 @@ TEST_F(HoldingTest, Availability)
 {
    holding->Transfer(EAST_BRANCH);
    holding->CheckOut(ArbitraryDate);
-   ASSERT_THAT(holding->IsAvailable(), Eq(false));
+   EXPECT_THAT(holding->IsAvailable(), Eq(false));
 
    date nextDay = ArbitraryDate + date_duration(1);
    holding->CheckIn(nextDay, EAST_BRANCH);
-   ASSERT_THAT(holding->IsAvailable(), Eq(true));
+   EXPECT_THAT(holding->IsAvailable(), Eq(true));
 }
 // END:Availability
 
