@@ -185,6 +185,7 @@ TEST_F(HoldingTest, ck)
    ASSERT_THAT(holding->DueDate(), Eq(expectedDue));
 }
 
+//START:Availability
 TEST_F(HoldingTest, Availability)
 {
    holding->Transfer(EAST_BRANCH);
@@ -195,6 +196,7 @@ TEST_F(HoldingTest, Availability)
    holding->CheckIn(nextDay, EAST_BRANCH);
    EXPECT_THAT(holding->IsAvailable(), Eq(true));
 }
+//END:Availability
 
 TEST_F(HoldingTest, UnavailableOnCheckout)
 {
