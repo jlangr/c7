@@ -120,27 +120,11 @@ void HoldingService::CheckIn(const string& barCode, date date, const string& bra
 // START:ApplyFine
 void HoldingService::ApplyFine(Patron& patronWithHolding, Holding& holding)
 {
-   int daysLate = CalculateDaysPastDue(holding);
+   unsigned int daysLate = CalculateDaysPastDue(holding);
 
    ClassificationService service;
    Book book = service.RetrieveDetails(holding.Classification());
-
-   switch (book.Type()) {
-      case Book::TYPE_BOOK:
-         patronWithHolding.AddFine(Book::BOOK_DAILY_FINE * daysLate); 
-         break;
-      case Book::TYPE_MOVIE:
-         {
-            int fine = 100 + Book::MOVIE_DAILY_FINE * daysLate;
-            if (fine > 1000)
-               fine = 1000;
-            patronWithHolding.AddFine(fine);
-         }
-         break;
-      case Book::TYPE_NEW_RELEASE:
-         patronWithHolding.AddFine(Book::NEW_RELEASE_DAILY_FINE * daysLate);
-         break;
-   }
+   patronWithHolding.ApplyFine(book, daysLate);
 }
 // END:ApplyFine
 
