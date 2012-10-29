@@ -95,7 +95,8 @@ void HoldingService::CheckOut(const string& patronCardNumber, const string& barC
 }
 
 // START:CheckIn
-void HoldingService::CheckIn(const string& barCode, date date, const string& branchId)
+void HoldingService::CheckIn(
+      const string& barCode, date date, const string& branchId)
 {
    Branch branch(branchId);
    mBranchService.Find(branch);
