@@ -89,7 +89,6 @@ TEST_F(LineReaderTest, OneLineTerminated) {
 TEST_F(LineReaderTest, OneLine) {
 // START_HIGHLIGHT
   LineReader reader(WriteTemporaryFile("a"));
-  // ...
 // END_HIGHLIGHT
 
   const char *line;
