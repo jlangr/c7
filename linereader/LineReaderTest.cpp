@@ -52,10 +52,16 @@ static int WriteTemporaryFile(const char* records) {
   return fd;
 }
 
+// START:OneLine
 class LineReaderTest: public testing::Test {
 public:
    int fd;
+// START_HIGHLIGHT
+   const char *line;
+   unsigned len;
+// END_HIGHLIGHT
 };
+
 // END:OneLine
 
 //namespace {
@@ -87,13 +93,8 @@ TEST_F(LineReaderTest, OneLineTerminated) {
 }
 // START:OneLine
 TEST_F(LineReaderTest, OneLine) {
-// START_HIGHLIGHT
   LineReader reader(WriteTemporaryFile("a"));
-  // ...
-// END_HIGHLIGHT
 
-  const char *line;
-  unsigned len;
   ASSERT_TRUE(reader.GetNextLine(&line, &len));
   ASSERT_EQ(len, (unsigned)1);
   ASSERT_EQ(line[0], 'a');
