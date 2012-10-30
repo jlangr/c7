@@ -101,7 +101,9 @@ TEST(LineReaderTest, OneLine) {
 
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
 
+//START_HIGHLIGHT
   close(fd);
+//END_HIGHLIGHT
 }
 //END:OneLine
 
