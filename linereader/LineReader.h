@@ -46,6 +46,10 @@ class LineReader {
         buf_used_(0) {
   }
 
+  ~LineReader() {
+     close(fd_);
+  }
+
   // The maximum length of a line.
   static const size_t kMaxLineLen = 512;
 
