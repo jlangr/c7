@@ -52,23 +52,35 @@ static int WriteTemporaryFile(const char* records) {
   return fd;
 }
 
-namespace {
-typedef testing::Test LineReaderTest;
-}
+// START:OneLine
+class LineReaderTest: public testing::Test {
+public:
+// START_HIGHLIGHT
+   int fd;
+// END_HIGHLIGHT
+   void TearDown() {
+// START_HIGHLIGHT
+      close(fd);
+// END_HIGHLIGHT
+   }
+};
+// END:OneLine
 
-TEST(LineReaderTest, EmptyFile) {
-  const int fd = WriteTemporaryFile("");
+//namespace {
+//typedef testing::Test LineReaderTest;
+//}
+
+TEST_F(LineReaderTest, EmptyFile) {
+  fd = WriteTemporaryFile("");
   LineReader reader(fd);
 
   const char *line;
   unsigned len;
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
-
-  close(fd);
 }
 
-TEST(LineReaderTest, OneLineTerminated) {
-  const int fd = WriteTemporaryFile("a\n");
+TEST_F(LineReaderTest, OneLineTerminated) {
+  int fd = WriteTemporaryFile("a\n");
   LineReader reader(fd);
 
   const char *line;
@@ -80,15 +92,13 @@ TEST(LineReaderTest, OneLineTerminated) {
   reader.PopLine(len);
 
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
-
-  close(fd);
 }
+// START:OneLine
 
-//START:OneLine
-TEST(LineReaderTest, OneLine) {
-//START_HIGHLIGHT
-  const int fd = WriteTemporaryFile("a");
-//END_HIGHLIGHT
+TEST_F(LineReaderTest, OneLine) {
+// START_HIGHLIGHT
+  fd = WriteTemporaryFile("a");
+// END_HIGHLIGHT
   LineReader reader(fd);
 
   const char *line;
@@ -100,38 +110,11 @@ TEST(LineReaderTest, OneLine) {
   reader.PopLine(len);
 
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
-
-//START_HIGHLIGHT
-  close(fd);
-//END_HIGHLIGHT
 }
-//END:OneLine
+// END:OneLine
 
-TEST(LineReaderTest, TwoLinesTerminated) {
-  const int fd = WriteTemporaryFile("a\nb\n");
-  LineReader reader(fd);
-
-  const char *line;
-  unsigned len;
-  ASSERT_TRUE(reader.GetNextLine(&line, &len));
-  ASSERT_EQ(len, (unsigned)1);
-  ASSERT_EQ(line[0], 'a');
-  ASSERT_EQ(line[1], 0);
-  reader.PopLine(len);
-
-  ASSERT_TRUE(reader.GetNextLine(&line, &len));
-  ASSERT_EQ(len, (unsigned)1);
-  ASSERT_EQ(line[0], 'b');
-  ASSERT_EQ(line[1], 0);
-  reader.PopLine(len);
-
-  ASSERT_FALSE(reader.GetNextLine(&line, &len));
-
-  close(fd);
-}
-
-TEST(LineReaderTest, TwoLines) {
-  const int fd = WriteTemporaryFile("a\nb");
+TEST_F(LineReaderTest, TwoLinesTerminated) {
+  fd = WriteTemporaryFile("a\nb\n");
   LineReader reader(fd);
 
   const char *line;
@@ -149,14 +132,33 @@ TEST(LineReaderTest, TwoLines) {
   reader.PopLine(len);
 
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
-
-  close(fd);
 }
 
-TEST(LineReaderTest, MaxLength) {
+TEST_F(LineReaderTest, TwoLines) {
+  fd = WriteTemporaryFile("a\nb");
+  LineReader reader(fd);
+
+  const char *line;
+  unsigned len;
+  ASSERT_TRUE(reader.GetNextLine(&line, &len));
+  ASSERT_EQ(len, (unsigned)1);
+  ASSERT_EQ(line[0], 'a');
+  ASSERT_EQ(line[1], 0);
+  reader.PopLine(len);
+
+  ASSERT_TRUE(reader.GetNextLine(&line, &len));
+  ASSERT_EQ(len, (unsigned)1);
+  ASSERT_EQ(line[0], 'b');
+  ASSERT_EQ(line[1], 0);
+  reader.PopLine(len);
+
+  ASSERT_FALSE(reader.GetNextLine(&line, &len));
+}
+
+TEST_F(LineReaderTest, MaxLength) {
   char l[LineReader::kMaxLineLen - 1];
   memset(l, 'a', sizeof(l));
-  const int fd = WriteTemporaryFile(l);
+  fd = WriteTemporaryFile(l);
   LineReader reader(fd);
 
   const char *line;
@@ -165,20 +167,16 @@ TEST(LineReaderTest, MaxLength) {
   ASSERT_EQ(len, sizeof(l));
   ASSERT_TRUE(memcmp(l, line, sizeof(l)) == 0);
   ASSERT_EQ(line[len], 0);
-
-  close(fd);
 }
 
-TEST(LineReaderTest, TooLong) {
+TEST_F(LineReaderTest, TooLong) {
   char l[LineReader::kMaxLineLen];
   memset(l, 'a', sizeof(l));
-  const int fd = WriteTemporaryFile(l);
+  fd = WriteTemporaryFile(l);
   LineReader reader(fd);
 
   const char *line;
   unsigned len;
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
-
-  close(fd);
 }
 
