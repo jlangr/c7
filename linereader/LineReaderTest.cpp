@@ -95,7 +95,7 @@ TEST_F(LineReaderTest, OneLineTerminated) {
 }
 
 // START:OneLine
-//
+
 TEST_F(LineReaderTest, OneLine) {
   LineReader reader(WriteTemporaryFile("a"));
 
