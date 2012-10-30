@@ -101,9 +101,7 @@ TEST_F(LineReaderTest, OneLine) {
 
   ASSERT_TRUE(reader.GetNextLine(&line, &len));
 // START_HIGHLIGHT
-  ASSERT_EQ(len, (unsigned)1);
-  ASSERT_EQ(line[0], 'a');
-  ASSERT_EQ(line[1], 0);
+  ASSERT_EQ_WITH_LENGTH("a", line, len);
 // END_HIGHLIGHT
   reader.PopLine(len);
 
