@@ -93,7 +93,9 @@ TEST_F(LineReaderTest, OneLineTerminated) {
 
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
 }
+
 // START:OneLine
+//
 TEST_F(LineReaderTest, OneLine) {
   LineReader reader(WriteTemporaryFile("a"));
 
