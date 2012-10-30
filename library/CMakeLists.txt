@@ -20,6 +20,7 @@ set(sources
    Patron.cpp
    PatronAccess.cpp
    PatronService.cpp
+   RomanConverter.cpp
    Scanner.cpp
    ScannerState.cpp
    ScannerStateCheckin.cpp
