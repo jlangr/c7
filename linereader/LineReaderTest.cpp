@@ -57,6 +57,13 @@ public:
    int fd;
    const char *line;
    unsigned len;
+//START:OneLine
+void ASSERT_EQ_WITH_LENGTH(
+   const char* expected, const char* actual, unsigned length) {
+   ASSERT_EQ(length, strlen(actual));
+   ASSERT_STREQ(expected, actual);
+}
+//END:OneLine
 };
 
 //namespace {
