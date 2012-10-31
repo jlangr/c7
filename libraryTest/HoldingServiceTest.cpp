@@ -28,29 +28,29 @@ public:
     HoldingService holdingService;
     date* arbitraryDate;
 
-	virtual void SetUp()
-	{
-		HoldingService::DeleteAll();
-        PatronService::DeleteAll();
-        BranchService::DeleteAll();
+   virtual void SetUp()
+   {
+      HoldingService::DeleteAll();
+      PatronService::DeleteAll();
+      BranchService::DeleteAll();
 
-        arbitraryDate = new date(2013, Jan, 1);
+      arbitraryDate = new date(2013, Jan, 1);
 
-		branch1 = new Branch("1", "branch1");
-		branch2 = new Branch("2", "branch2");
-        branchService.Add(*branch1);
-        branchService.Add(*branch2);
-	}
+      branch1 = new Branch("1", "branch1");
+      branch2 = new Branch("2", "branch2");
+      branchService.Add(*branch1);
+      branchService.Add(*branch2);
+   }
 
-	virtual void TearDown()
-	{
-		delete branch1;
-		delete branch2;
+   virtual void TearDown()
+   {
+      delete branch1;
+      delete branch2;
 
-        HoldingService::DeleteAll();
-        PatronService::DeleteAll();
-        BranchService::DeleteAll();
-	}
+      HoldingService::DeleteAll();
+      PatronService::DeleteAll();
+      BranchService::DeleteAll();
+   }
 
     void AddPatronWithId(string id)
     {
@@ -106,7 +106,7 @@ TEST_F(HoldingServiceTest, DeleteAllSetsSizeToZero)
     holdingService.AddAtBranch(branch1->Id(), HoldingBarcode(THE_TRIAL_CLASSIFICATION, 1).AsString());
     holdingService.AddAtBranch(branch2->Id(), HoldingBarcode(THE_TRIAL_CLASSIFICATION, 2).AsString());
 
-	HoldingService::DeleteAll();
+   HoldingService::DeleteAll();
 
     ASSERT_THAT(holdingService.InventorySize(), Eq(0));
 }
@@ -194,12 +194,12 @@ TEST_F(HoldingServiceTest, FindByClassificationReturnsMultipleMatches)
 
 TEST_F(HoldingServiceTest, Transfer)
 {
-	holdingService.AddAtBranch(branch1->Id(), HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString());
+   holdingService.AddAtBranch(branch1->Id(), HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString());
     string barcode = Holding::ConstructBarcode(CATCH22_CLASSIFICATION, 1);
 
     holdingService.Transfer(barcode, branch1->Id());
 
-	ASSERT_THAT(FindHolding(barcode).CurrentBranch(), Eq(*branch1));
+   ASSERT_THAT(FindHolding(barcode).CurrentBranch(), Eq(*branch1));
 }
 
 TEST_F(HoldingServiceTest, CheckedOutHoldingUnavailable)
@@ -209,9 +209,9 @@ TEST_F(HoldingServiceTest, CheckedOutHoldingUnavailable)
 
     holdingService.CheckOut("p1001", HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString(), *arbitraryDate);
 
-	Holding retrieved(HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString());
-	holdingService.FindByBarCode(retrieved);
-	ASSERT_THAT(retrieved.IsAvailable(), Eq(false));
+   Holding retrieved(HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString());
+   holdingService.FindByBarCode(retrieved);
+   ASSERT_THAT(retrieved.IsAvailable(), Eq(false));
 }
 
 TEST_F(HoldingServiceTest, CheckedOutBooksAddedToPatron)
