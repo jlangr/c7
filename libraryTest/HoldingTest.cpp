@@ -309,7 +309,7 @@ public:
    }
 };
 
-//START:Implicit
+//START:ImplicitCorrelation
 TEST_F(AMovieHolding, AnswersDateDueWhenCheckedOut)
 {
    date checkoutDate(2013, Mar, 1);
@@ -319,7 +319,7 @@ TEST_F(AMovieHolding, AnswersDateDueWhenCheckedOut)
 
    ASSERT_THAT(due, Eq(checkoutDate + date_duration(Book::MOVIE_CHECKOUT_PERIOD)));
 }
-//END:Implicit
+//END:ImplicitCorrelation
 
 TEST_F(HoldingTest, MoviesDueCheckoutPeriodDaysAfterCheckout)
 {
