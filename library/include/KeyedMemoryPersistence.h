@@ -38,7 +38,6 @@ public:
 
     std::auto_ptr<T> Get(const std::string& id) const
     {
-       return std::auto_ptr<T>(NULL);
         std::map<std::string,Serializable*>::const_iterator it = mData.find(id);
         if (it == mData.end())
             return std::auto_ptr<T>(NULL);
