@@ -312,11 +312,12 @@ public:
 //START:Implicit
 TEST_F(AMovieHolding, AnswersDateDueWhenCheckedOut)
 {
-   movie->CheckOut(date(2013, Mar, 1));
+   date checkoutDate(2013, Mar, 1);
+   movie->CheckOut(checkoutDate);
 
    date due = movie->DueDate();
 
-   ASSERT_THAT(due, Eq(date(2013, Mar, 8)));
+   ASSERT_THAT(due, Eq(checkoutDate + date_duration(Book::MOVIE_CHECKOUT_PERIOD)));
 }
 //END:Implicit
 
