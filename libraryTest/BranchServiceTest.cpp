@@ -35,21 +35,15 @@ TEST_F(BranchServiceTest, AddReturnsGeneratedId)
    ASSERT_THAT(id, Gt("0"));
 }
 
-//START:Add
+//START:AddClean
 TEST_F(BranchServiceTest, AddGeneratesUniqueId)
 {
-   try
-   {
-      string id1 = service.Add("name1", "");
-      string id2 = service.Add("name2", "");
+   string id1 = service.Add("name1", "");
+   string id2 = service.Add("name2", "");
 
-      ASSERT_THAT(id1, Ne(id2));
-   }
-   catch (...) {
-      FAIL();
-   }
+   ASSERT_THAT(id1, Ne(id2));
 }
-//END:Add
+//END:AddClean
 
 //START:AddThrows
 TEST_F(BranchServiceTest, AddThrowsWhenNameNotUnique)
