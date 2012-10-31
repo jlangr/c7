@@ -29,10 +29,12 @@ TEST_P(PersistenceTest, SizeIncrementsWithEachAdd)
     ASSERT_THAT(persister->Size(), Eq(2));
 }
 
+//START:NullTest
 TEST_P(PersistenceTest, ReturnsNullPointerWhenItemNotFound)
 {
     ASSERT_THAT(persister->Get("no id there"), IsNull());
 }
+//END:NullTest
 
 //START:Defensive
 TEST_P(PersistenceTest, AddedItemCanBeRetrievedById)
