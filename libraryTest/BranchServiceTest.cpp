@@ -54,10 +54,12 @@ TEST_F(BranchServiceTest, AddThrowsWhenNameNotUnique)
 }
 //END:AddThrows
 
+//START:CountZero
 TEST_F(BranchServiceTest, CountInitiallyZero)
 {
-    ASSERT_THAT(service.BranchCount(), Eq(0));
+    ASSERT_THAT("branch count should be 0", service.BranchCount(), Eq(0));
 }
+//END:CountZero
 
 TEST_F(BranchServiceTest, DeleteAllRemovesAnyAddedBranches)
 {
