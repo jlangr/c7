@@ -298,15 +298,27 @@ TEST_F(HoldingTest, CheckinMakesBookAvailableAtAnotherBranch)
    ASSERT_THAT(IsAvailableAt(holding, WEST_BRANCH), Eq(true));
 }
 
-TEST_F(HoldingTest, DateDueForMovies)
-{
-   Holding holdingA(SEVEN_CLASSIFICATION, 1);
-   holdingA.Transfer(EAST_BRANCH);
-   date checkoutOn(2007, Mar, 1);
-   holdingA.CheckOut(checkoutOn);
+class AMovieHolding: public HoldingTest {
+public:
+   shared_ptr<Holding> movie;
 
-   ASSERT_THAT(holdingA.DueDate(), Eq(checkoutOn + date_duration(Book::MOVIE_CHECKOUT_PERIOD)));
+   virtual void SetUp() {
+      HoldingTest::SetUp();
+      movie = make_shared<Holding>(SEVEN_CLASSIFICATION, 1);
+      movie->Transfer(EAST_BRANCH);
+   }
+};
+
+//START:Implicit
+TEST_F(AMovieHolding, AnswersDateDueWhenCheckedOut)
+{
+   movie->CheckOut(date(2013, Mar, 1));
+
+   date due = movie->DueDate();
+
+   ASSERT_THAT(due, Eq(date(2013, Mar, 8)));
 }
+//END:Implicit
 
 TEST_F(HoldingTest, MoviesDueCheckoutPeriodDaysAfterCheckout)
 {
