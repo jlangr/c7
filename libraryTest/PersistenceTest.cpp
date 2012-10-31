@@ -36,7 +36,7 @@ TEST_P(PersistenceTest, ReturnsNullPointerWhenItemNotFound)
 }
 //END:NullTest
 
-//START:Defensive
+//START:UsingPointee
 TEST_P(PersistenceTest, AddedItemCanBeRetrievedById)
 {
     persister->Add(*objectWithId1);
@@ -44,11 +44,10 @@ TEST_P(PersistenceTest, AddedItemCanBeRetrievedById)
     auto found = persister->Get("1");
 
 // START_HIGHLIGHT
-    ASSERT_THAT(found, NotNull());
+    ASSERT_THAT(found, Pointee(*objectWithId1));
 // END_HIGHLIGHT
-    ASSERT_THAT(*found, Eq(*objectWithId1));
 }
-//END:Defensive
+//END:UsingPointee
 
 TEST_P(PersistenceTest, GetAnswersNullWhenNoMatchingEntries)
 {
