@@ -104,14 +104,19 @@ TEST_F(BranchServiceTest, FindRetrievesById)
     ASSERT_THAT(retrieved.Name(), Eq(eastBranch->Name()));
 }
 
+// START:AddBranchIncrementsCount
+// test that adding a branch increments the count
 TEST_F(BranchServiceTest, AddBranchIncrementsCount)
 {
-    service.Add(*eastBranch);
-    ASSERT_THAT(service.BranchCount(), Eq(1));
+   // first branch
+   service.Add(*eastBranch); // East
+   ASSERT_THAT(service.BranchCount(), Eq(1));
 
-    service.Add(*westBranch);
-    ASSERT_THAT(service.BranchCount(), Eq(2));
+   // second branch
+   service.Add(*westBranch); // West
+   ASSERT_THAT(service.BranchCount(), Eq(2)); // count now 2
 }
+// END:AddBranchIncrementsCount
 
 TEST_F(BranchServiceTest, PersistsAcrossServiceInstances)
 {
