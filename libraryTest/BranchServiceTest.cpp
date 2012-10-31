@@ -105,16 +105,13 @@ TEST_F(BranchServiceTest, FindRetrievesById)
 }
 
 // START:AddBranchIncrementsCount
-// test that adding a branch increments the count
 TEST_F(BranchServiceTest, AddBranchIncrementsCount)
 {
-   // first branch
-   service.Add(*eastBranch); // East
+   service.Add(*eastBranch); 
    ASSERT_THAT(service.BranchCount(), Eq(1));
 
-   // second branch
-   service.Add(*westBranch); // West
-   ASSERT_THAT(service.BranchCount(), Eq(2)); // count now 2
+   service.Add(*westBranch);
+   ASSERT_THAT(service.BranchCount(), Eq(2)); 
 }
 // END:AddBranchIncrementsCount
 
