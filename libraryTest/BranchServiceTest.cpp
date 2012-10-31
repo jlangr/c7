@@ -54,6 +54,22 @@ TEST_F(BranchServiceTest, AddThrowsWhenNameNotUnique)
 }
 //END:AddThrows
 
+class ABranchService: public BranchServiceTest
+{
+public:
+   void SetUp() {
+      BranchServiceTest::SetUp();
+      service.Add(*eastBranch);
+   }
+};
+
+//START:Implicit
+TEST_F(ABranchService, ThrowsWhenDuplicateBranchAdded)
+{
+   ASSERT_THROW(service.Add("east", ""), DuplicateBranchNameException);
+}
+//END:Implicit
+
 //START:CountZero
 TEST_F(BranchServiceTest, CountInitiallyZero)
 {
