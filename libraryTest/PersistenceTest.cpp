@@ -61,7 +61,8 @@ TEST_P(PersistenceTest, RetrievedItemIsNewInstance)
 {
     persister->Add(*objectWithId1);
 
-    ASSERT_THAT(obj == persister->Get(Id1).get(), Eq(false));
+    ASSERT_THAT(objectWithId1 == persister->Get(objectWithId1->Id()).get(), 
+          Eq(false));
 }
 // END:VariableNeededFixed
 
