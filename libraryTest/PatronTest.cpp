@@ -87,11 +87,14 @@ TEST_F(PatronTest, CreateDefaultsAllFields)
 	ASSERT_THAT(nobody.FineBalance(), Eq(0));
 }
 
+//START:NoNameNeeded
 TEST_F(PatronTest, AddFineUpdatesFineBalance)
 {
 	jane->AddFine(10);
+
 	ASSERT_THAT(jane->FineBalance(), Eq(10));
 }
+//END:NoNameNeeded
 
 TEST_F(PatronTest, AddFineAccumulatesIntoBalance)
 {
