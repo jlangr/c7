@@ -204,10 +204,10 @@ TEST_F(HoldingServiceTest, Transfer)
 
 TEST_F(HoldingServiceTest, CheckedOutHoldingUnavailable)
 {
-    holdingService.AddAtBranch(branch1->Id(), HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString());
-    AddPatronWithId("p1001");
+   holdingService.AddAtBranch(branch1->Id(), HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString());
+   AddPatronWithId("p1001");
 
-    holdingService.CheckOut("p1001", HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString(), *arbitraryDate);
+   holdingService.CheckOut("p1001", HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString(), *arbitraryDate);
 
    Holding retrieved(HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString());
    holdingService.FindByBarCode(retrieved);
@@ -259,14 +259,14 @@ TEST_F(HoldingServiceTest, CheckInEarlyDoesNotUpdatePatronFineBalance)
     ASSERT_THAT(FindPatronWithId(patronCardNumber).FineBalance(), Eq(0));
 }
 
-TEST_F(HoldingServiceTest, CheckInLateUpdatesPatronFineBalance)
+//START:NoAAA
+TEST_F(HoldingServiceTest, X)
 {
     HoldingBarcode barcode(THE_TRIAL_CLASSIFICATION, 1);
     string patronCardNumber("p5");
     CheckOut(barcode, branch1, patronCardNumber);
     date_duration oneDayLate(Book::BOOK_CHECKOUT_PERIOD + 1);
-
     holdingService.CheckIn(barcode.AsString(), *arbitraryDate + oneDayLate, branch2->Id());
-
     ASSERT_THAT(FindPatronWithId(patronCardNumber).FineBalance(), Eq(Book::BOOK_DAILY_FINE));
 }
+//END:NoAAA
