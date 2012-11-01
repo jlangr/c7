@@ -54,14 +54,16 @@ TEST_P(PersistenceTest, GetAnswersNullWhenNoMatchingEntries)
     ASSERT_THAT(persister->Get("1").get(), IsNull());
 };
 
-// START:VariableNeeded
+const string PersistenceTest::Id1("1");
+
+// START:VariableNeededFixed
 TEST_P(PersistenceTest, RetrievedItemIsNewInstance)
 {
-    persister->Add(*obj);
+    persister->Add(*objectWithId1);
 
-    ASSERT_THAT(obj == persister->Get("1").get(), Eq(false));
+    ASSERT_THAT(obj == persister->Get(Id1).get(), Eq(false));
 }
-// END:VariableNeeded
+// END:VariableNeededFixed
 
 TEST_P(PersistenceTest, CanPersistMultipleObjects)
 {

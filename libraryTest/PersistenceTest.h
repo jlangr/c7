@@ -17,13 +17,13 @@ public:
     TestSerializable* objectWithId1;
     TestSerializable* objectWithId2;
     TestSerializable* obj;
+    static const std::string Id1;
 
     void SetUp() 
     {
         persister = (*InjectedFactoryFunction())();
         persister->Clear();
-        objectWithId1 = new TestSerializable("one", "1");
-        obj = new TestSerializable("one", "1");
+        objectWithId1 = new TestSerializable("one", Id1);
         objectWithId2 = new TestSerializable("two", "2");
     }
 
@@ -37,7 +37,6 @@ public:
         persister->Clear();
         delete objectWithId2;
         delete objectWithId1;
-        delete obj;
         delete persister;
     }
 
