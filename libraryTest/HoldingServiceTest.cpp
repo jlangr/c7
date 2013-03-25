@@ -254,7 +254,7 @@ TEST_F(HoldingServiceTest, CheckInEarlyDoesNotUpdatePatronFineBalance)
     string patronCardNumber("p5");
     CheckOut(barcode, branch1, patronCardNumber);
 
-    holdingService.CheckIn(barcode.AsString(hj, *arbitraryDate + date_duration(1), branch2->Id());
+    holdingService.CheckIn(barcode.AsString(), *arbitraryDate + date_duration(1), branch2->Id());
 
     ASSERT_THAT(FindPatronWithId(patronCardNumber).FineBalance(), Eq(0));
 }
