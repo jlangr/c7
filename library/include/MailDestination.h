@@ -4,13 +4,13 @@
 #include "MailMessage.h"
 
 #include <string>
+#include <stdexcept>
 
-class MailDestinationException: public std::exception
+class MailDestinationException: public std::runtime_error
 {
-    const char* what() const throw()
-    {
-        return "unable to connect to LDAP server";
-    }
+public:
+    MailDestinationException()
+       : std::runtime_error("unable to connect to LDAP server") {}
 };
 
 class MailDestination
