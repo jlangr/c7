@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <exception>
+#include <stdexcept>
 
 #include "Book.h"
 
@@ -14,20 +14,11 @@ public:
     Book RetrieveDetails(const std::string& classification) const;
 };
 
-class ClassificationNotFoundException: public std::exception
-{
+class ClassificationNotFoundException: public std::runtime_error {
 public:
     ClassificationNotFoundException(const std::string& classification) 
-        : mClassification(classification) {}
+        : std::runtime_error("classification not found")
+        , mClassification(classification) {}
 
-    ~ClassificationNotFoundException() throw() {}
-
-    // TODO include classification in message
-    virtual const char* what() const throw()
-    {
-        return "classification not found";
-    }
-
-private:
     std::string mClassification;
 };
