@@ -27,7 +27,7 @@ void BranchService::Add(Branch& branch)
 
 string BranchService::Add(const string& name, const string& address)
 {
-//    if (ExistsWithName(name))
+    if (ExistsWithName(name))
         throw DuplicateBranchNameException();
 
     stringstream out;

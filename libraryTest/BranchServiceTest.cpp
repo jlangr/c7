@@ -38,6 +38,9 @@ TEST_F(BranchServiceTest, AddReturnsGeneratedId)
 //START:Add
 TEST_F(BranchServiceTest, AddGeneratesUniqueId)
 {
+   // Don't do this!
+   // Eliminate try/catch in tests that should
+   // not generate exceptions
    try
    {
       string id1 = service.Add("name1", "");
