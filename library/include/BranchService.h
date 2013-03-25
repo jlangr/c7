@@ -5,9 +5,6 @@
 #include "BranchAccess.h"
 
 class DuplicateBranchNameException: public std::exception {
-public:
-    DuplicateBranchNameException(void) {};
-    ~DuplicateBranchNameException() throw() {};
 };
 
 class BranchService
