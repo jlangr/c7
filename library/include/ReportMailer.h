@@ -7,22 +7,13 @@
 #include "EndpointValidator.h"
 
 #include <vector>
-#include <exception>
+#include <stdexcept>
 
-class ReportMailerException: public std::exception
+class ReportMailerException: public std::runtime_error
 {
 public:
     ReportMailerException(const std::string& message)
-        : mMessage(message) {}
-    virtual ~ReportMailerException() throw() {}
-
-    const char* what() const throw()
-    {
-        return mMessage.c_str();
-    }
-
-private:
-    std::string mMessage;
+        : std::runtime_error(message) {}
 };
 
 template <typename ENDPOINT_VALIDATOR>
