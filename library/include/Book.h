@@ -38,7 +38,7 @@ public:
 private:
 	std::string mTitle;
 	std::string mAuthor;
-	std::string mClassification;
 	unsigned short mYear;
+	std::string mClassification;
 	unsigned short mType;
 };
