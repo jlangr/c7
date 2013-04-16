@@ -12,6 +12,7 @@
 
 class MockDisplayListener: public DisplayListener {
 public:
+   virtual ~MockDisplayListener() {}
     MOCK_METHOD1(ShowMessage, void(const std::string& text));
 };
 
