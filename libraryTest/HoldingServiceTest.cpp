@@ -89,16 +89,16 @@ public:
 
 TEST_F(HoldingServiceTest, SizeInitiallyZero)
 {
-    ASSERT_THAT(holdingService.InventorySize(), Eq(0));
+    ASSERT_THAT(holdingService.InventorySize(), Eq(0u));
 }
 
 TEST_F(HoldingServiceTest, SizeIncrementedOnAddRegardlessOfBranch)
 {
     holdingService.AddAtBranch(branch1->Id(), HoldingBarcode(THE_TRIAL_CLASSIFICATION, 1).AsString());
-    ASSERT_THAT(holdingService.InventorySize(), Eq(1));
+    ASSERT_THAT(holdingService.InventorySize(), Eq(1u));
 
     holdingService.AddAtBranch(branch2->Id(), HoldingBarcode(THE_TRIAL_CLASSIFICATION, 2).AsString());
-    ASSERT_THAT(holdingService.InventorySize(), Eq(2));
+    ASSERT_THAT(holdingService.InventorySize(), Eq(2u));
 }
 
 TEST_F(HoldingServiceTest, DeleteAllSetsSizeToZero)
@@ -108,7 +108,7 @@ TEST_F(HoldingServiceTest, DeleteAllSetsSizeToZero)
 
 	HoldingService::DeleteAll();
 
-    ASSERT_THAT(holdingService.InventorySize(), Eq(0));
+    ASSERT_THAT(holdingService.InventorySize(), Eq(0u));
 }
 
 TEST_F(HoldingServiceTest, AddInitializesBranch)
@@ -245,7 +245,7 @@ TEST_F(HoldingServiceTest, CheckInUpdatesPatronHoldings)
     holdingService.CheckIn(barcode.AsString(), *arbitraryDate + date_duration(1), branch2->Id());
 
     Patron retrieved = FindPatronWithId(patronId);
-    ASSERT_THAT(retrieved.Holdings().size(), Eq(0));
+    ASSERT_THAT(retrieved.Holdings().size(), Eq(0u));
 }
 
 TEST_F(HoldingServiceTest, CheckInEarlyDoesNotUpdatePatronFineBalance)
