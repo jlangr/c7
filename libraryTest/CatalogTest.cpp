@@ -41,14 +41,14 @@ public:
 
 TEST_F(CatalogTest, IsEmptyOnCreation)
 {
-	ASSERT_THAT(catalog.Size(), Eq(0));
+	ASSERT_THAT(catalog.Size(), Eq(0u));
 }
 
 TEST_F(CatalogTest, AddIncrementsCount)
 {
 	catalog.Add(*theTrialHolding);
 
-    ASSERT_THAT(catalog.Size(), Eq(1));
+    ASSERT_THAT(catalog.Size(), Eq(1u));
 }
 
 TEST_F(CatalogTest, FindByBarCodeAnswersFalseWhenNotFound)

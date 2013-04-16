@@ -10,6 +10,7 @@
 class LibraryOfCongressAPI
 {
 public:
+    virtual ~LibraryOfCongressAPI() {}
     virtual std::string GetISBN(const std::string& classification) 
     {
         throw std::runtime_error("connection currently unavailable, please try later");
