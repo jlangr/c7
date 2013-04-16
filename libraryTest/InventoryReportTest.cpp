@@ -35,7 +35,6 @@ public:
     void SetUp()
     {
         api = new StubLibraryOfCongressAPI();
-        // should this be an auto_ptr
         report = new InventoryReport(&catalog, api);
 
         trial1 = new Holding(THE_TRIAL_CLASSIFICATION, 1);
@@ -70,27 +69,11 @@ public:
     }
 };
 
-TEST_F(InventoryReportTest, CanGenerate)
-{  
-    //string output = report->Generate();
-
-    //cout << output << endl;
-}
-
-TEST_F(InventoryReportTest, VerySlowTest)
-{
-    unsigned long i = 2;
-    for (long l = 0; l < 99999999; l++)
-        if (l % 2 == 1)
-            i = l * 3;
-    
-}
-
 TEST_F(InventoryReportTest, ReportFooterContainsCopyrightNotice)
 {
     stringstream stream;
 
     report->AppendFooter(stream);
 
-    ASSERT_THAT(stream.str(), Eq("Copyright (C) 2012 Langr Software Solutions"));
+    ASSERT_THAT(stream.str(), Eq("Copyright (C) 2014 Langr Software Solutions"));
 }
