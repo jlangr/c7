@@ -68,7 +68,7 @@ void InventoryReport::AppendHeader(stringstream& buffer) {
 
 void InventoryReport::AppendFooter(stringstream& buffer)
 {
-    buffer << "Copyright (C) 2012 Langr Software Solutions";
+    buffer << "Copyright (C) 2014 Langr Software Solutions";
 }
 
 void InventoryReport::AppendColumnHeaders(stringstream& buffer) {
