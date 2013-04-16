@@ -11,14 +11,14 @@ using namespace testing;
 
 TEST_P(PersistenceTest, IsEmptyOnCreation)
 {
-    ASSERT_THAT(persister->Size(), Eq(0));
+    ASSERT_THAT(persister->Size(), Eq(0u));
 }
 
 TEST_P(PersistenceTest, SizeSetToOneOnFirstAdd)
 {
     persister->Add(*objectWithId1);
 
-    ASSERT_THAT(persister->Size(), Eq(1));
+    ASSERT_THAT(persister->Size(), Eq(1u));
 }
 
 TEST_P(PersistenceTest, SizeIncrementsWithEachAdd)
@@ -26,7 +26,7 @@ TEST_P(PersistenceTest, SizeIncrementsWithEachAdd)
     persister->Add(*objectWithId1);
     persister->Add(*objectWithId2);
 
-    ASSERT_THAT(persister->Size(), Eq(2));
+    ASSERT_THAT(persister->Size(), Eq(2u));
 }
 
 //START:NullTest
@@ -107,5 +107,5 @@ TEST_P(PersistenceTest, FindAllMatching)
     vector<Serializable*> matches;
     persister->FindAllMatching(NameMatcher, "Jeff", matches);
 
-    ASSERT_THAT(matches.size(), Eq(2));
+    ASSERT_THAT(matches.size(), Eq(2u));
 };
