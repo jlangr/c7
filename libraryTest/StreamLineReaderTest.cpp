@@ -42,7 +42,7 @@ TEST_F(StreamLineReaderTest, CanReadLineWithUnsignedInt)
 
     reader.Read(number);
 
-    ASSERT_THAT(number, Eq(42));
+    ASSERT_THAT(number, Eq(42u));
 }
 
 TEST_F(StreamLineReaderTest, SetsUnsignedIntToZeroOnConvertFail)
@@ -53,5 +53,5 @@ TEST_F(StreamLineReaderTest, SetsUnsignedIntToZeroOnConvertFail)
 
     reader.Read(number);
 
-    ASSERT_THAT(number, Eq(0));
+    ASSERT_THAT(number, Eq(0u));
 }
