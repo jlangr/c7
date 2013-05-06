@@ -75,7 +75,7 @@ TEST_F(BranchAccessTest, FindAnswersFalseForNonexistentBranch)
 {
     Branch east("66");
 
-    ASSERT_THAT(access.Find(east), Eq(false));
+    ASSERT_FALSE(access.Find(east));
 }
 
 TEST_F(BranchAccessTest, MultipleItemsPersistedCorrectly)
