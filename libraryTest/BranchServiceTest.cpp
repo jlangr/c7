@@ -84,8 +84,8 @@ TEST_F(BranchServiceTest, DeleteAllRemovesAnyAddedBranches)
 
     BranchService::DeleteAll();
 
-    ASSERT_THAT(service.Find(*eastBranch), Eq(false));
-    ASSERT_THAT(service.Find(*westBranch), Eq(false));
+    ASSERT_FALSE(service.Find(*eastBranch));
+    ASSERT_FALSE(service.Find(*westBranch));
 }
 
 TEST_F(BranchServiceTest, DeleteAllSetsCountToZero)
@@ -107,7 +107,7 @@ TEST_F(BranchServiceTest, FindAnswersTrueForAddedBranch)
 {
     service.Add(*eastBranch);
     
-    ASSERT_THAT(service.Find(*eastBranch), Eq(true));
+    ASSERT_TRUE(service.Find(*eastBranch));
 }
 
 TEST_F(BranchServiceTest, FindRetrievesById)
@@ -136,6 +136,6 @@ TEST_F(BranchServiceTest, PersistsAcrossServiceInstances)
     service.Add(*eastBranch);
 
     BranchService anotherServiceInstance;
-    ASSERT_THAT(anotherServiceInstance.Find(*eastBranch), Eq(true));
+    ASSERT_TRUE(anotherServiceInstance.Find(*eastBranch));
     ASSERT_THAT(anotherServiceInstance.BranchCount(), Eq(1));
 }
