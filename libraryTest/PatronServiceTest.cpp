@@ -70,7 +70,7 @@ TEST_F(PatronServiceTest, AddFailsWhenPatronHasBadCredit)
     service.Add("Joe", 10, CARD_NUMBER);
 
     Patron retrieved("", 10);
-    ASSERT_THAT(service.Find(retrieved), Eq(false));
+    ASSERT_FALSE(service.Find(retrieved));
 }
 
 TEST_F(PatronServiceTest, AddIncrementsCount)
@@ -104,7 +104,7 @@ TEST_F(PatronServiceTest, DeleteAllRemovesAnyAddedPatrons)
 
 TEST_F(PatronServiceTest, FindAnswerFalseForNonexistentPatron)
 {
-    ASSERT_THAT(service.Find(*joe), Eq(false));
+    ASSERT_FALSE(service.Find(*joe));
 }
 
 TEST_F(PatronServiceTest, FindAnswersTrueForAddedPatron)
@@ -113,7 +113,7 @@ TEST_F(PatronServiceTest, FindAnswersTrueForAddedPatron)
 
     bool found = service.Find(*joe);
 
-    ASSERT_THAT(found, Eq(true));
+    ASSERT_TRUE(found);
 }
 
 TEST_F(PatronServiceTest, FindRetrievesByCardNumber)
