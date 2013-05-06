@@ -126,7 +126,7 @@ TEST_F(HoldingServiceTest, AddedHoldingCanBeFound)
     holdingService.AddAtBranch(branch1->Id(), HoldingBarcode(THE_TRIAL_CLASSIFICATION, 1).AsString());
 
     Holding theTrial(THE_TRIAL_CLASSIFICATION, 1);
-    ASSERT_THAT(holdingService.FindByBarCode(theTrial), Eq(true));
+    ASSERT_TRUE(holdingService.FindByBarCode(theTrial));
 }
 
 TEST_F(HoldingServiceTest, ExistsReturnsFalseWhenNotFound)
@@ -135,7 +135,7 @@ TEST_F(HoldingServiceTest, ExistsReturnsFalseWhenNotFound)
 
     bool found = holdingService.ExistsWithBarcode(barcode);
 
-    ASSERT_THAT(found, Eq(false));
+    ASSERT_FALSE(found);
 }
 
 TEST_F(HoldingServiceTest, ExistsReturnsTrueWhenNotFound)
@@ -145,7 +145,7 @@ TEST_F(HoldingServiceTest, ExistsReturnsTrueWhenNotFound)
 
     bool found = holdingService.ExistsWithBarcode(barcode);
 
-    ASSERT_THAT(found, Eq(true));
+    ASSERT_TRUE(found);
 }
 
 TEST_F(HoldingServiceTest, IsAvailableReturnsTrueWhenHoldingAvailable)
@@ -155,7 +155,7 @@ TEST_F(HoldingServiceTest, IsAvailableReturnsTrueWhenHoldingAvailable)
 
     bool isAvailable = holdingService.IsAvailable(barcode);
 
-    ASSERT_THAT(isAvailable, Eq(true));
+    ASSERT_TRUE(isAvailable);
 }
 
 TEST_F(HoldingServiceTest, IsAvailableReturnsFalseWhenHoldingCheckedOut)
@@ -166,7 +166,7 @@ TEST_F(HoldingServiceTest, IsAvailableReturnsFalseWhenHoldingCheckedOut)
 
     bool isAvailable = holdingService.IsAvailable(barcode.AsString());
 
-    ASSERT_THAT(isAvailable, Eq(false));
+    ASSERT_FALSE(isAvailable);
 }
 
 TEST_F(HoldingServiceTest, FindByClassificationReturnsEmptyWhenNoMatch)
@@ -175,7 +175,7 @@ TEST_F(HoldingServiceTest, FindByClassificationReturnsEmptyWhenNoMatch)
 
     holdingService.FindByClassification(THE_TRIAL_CLASSIFICATION, holdings);
 
-    ASSERT_THAT(holdings.empty(), Eq(true));
+    ASSERT_TRUE(holdings.empty());
 }
 
 TEST_F(HoldingServiceTest, FindByClassificationReturnsMultipleMatches)
@@ -211,7 +211,7 @@ TEST_F(HoldingServiceTest, CheckedOutHoldingUnavailable)
 
 	Holding retrieved(HoldingBarcode(CATCH22_CLASSIFICATION, 1).AsString());
 	holdingService.FindByBarCode(retrieved);
-	ASSERT_THAT(retrieved.IsAvailable(), Eq(false));
+	ASSERT_FALSE(retrieved.IsAvailable());
 }
 
 TEST_F(HoldingServiceTest, CheckedOutBooksAddedToPatron)
