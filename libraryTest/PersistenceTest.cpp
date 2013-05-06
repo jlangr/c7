@@ -58,7 +58,7 @@ TEST_P(PersistenceTest, RetrievedItemIsNewInstance)
 {
     persister->Add(*objectWithId1);
 
-    ASSERT_THAT(objectWithId1 == persister->Get("1").get(), Eq(false));
+    ASSERT_FALSE(objectWithId1 == persister->Get("1").get());
 }
 
 TEST_P(PersistenceTest, CanPersistMultipleObjects)
@@ -83,14 +83,14 @@ TEST_P(PersistenceTest, MatchesAnswersTrueWithMatchingEntries)
 
     bool exists = persister->Matches(NameMatcher, object1Name);
 
-    ASSERT_THAT(exists, Eq(true));
+    ASSERT_TRUE(exists);
 };
 
 TEST_P(PersistenceTest, MatchesAnswersFalseWhenNoMatchingEntries)
 {
     bool exists = persister->Matches(NameMatcher, "don't match anything");
 
-    ASSERT_THAT(exists, Eq(false));
+    ASSERT_FALSE(exists);
 };
 
 TEST_P(PersistenceTest, FindAllMatching) 
