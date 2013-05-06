@@ -40,7 +40,7 @@ TEST(BranchTest, EqualityAnswersTrueOnIdMatch)
     Branch branch1("1", "a");
     Branch branch1copy("1", "b");
 
-    ASSERT_THAT(branch1 == branch1copy, Eq(true));
+    ASSERT_TRUE(branch1 == branch1copy);
 }
 
 TEST(BranchTest, InequalityAnswersFalseOnIdMismatch)
@@ -48,7 +48,7 @@ TEST(BranchTest, InequalityAnswersFalseOnIdMismatch)
     Branch branch1("1", "a");
     Branch branch2("2", "a");
 
-    ASSERT_THAT(branch1 != branch2, Eq(true));
+    ASSERT_TRUE(branch1 != branch2);
 }
 
 TEST(BranchTest, CanLoadFromSerialized)
