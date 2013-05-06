@@ -136,5 +136,5 @@ TEST_F(PatronTest, Equality)
 	Patron patron1("a", 1);
 	Patron patron1copy("a", 1);
 
-    ASSERT_THAT(patron1 == patron1copy, Eq(true));
+   ASSERT_TRUE(patron1 == patron1copy);
 }
