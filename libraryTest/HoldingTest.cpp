@@ -78,7 +78,7 @@ TEST_F(HoldingTest, IsNotAvailableWhenCreated)
 {
     Holding holding(Holding::ConstructBarcode("A", 1));
 
-    ASSERT_THAT(holding.IsAvailable(), Eq(false));
+    ASSERT_FALSE(holding.IsAvailable());
 }
 
 TEST_F(HoldingTest, CanSpecifyClassificationSeparatelyWhenCreated)
@@ -99,7 +99,7 @@ TEST_F(HoldingTest, IsNotAvailableWhenCreatedWithSeparateClassificationAndCopy)
 {
     Holding holding("A", 2);
 
-    ASSERT_THAT(holding.IsAvailable(), Eq(false));
+    ASSERT_FALSE(holding.IsAvailable());
 }
 
 TEST_F(HoldingTest, AssignmentCopiesAllMembers)
@@ -110,14 +110,14 @@ TEST_F(HoldingTest, AssignmentCopiesAllMembers)
 
    ASSERT_THAT(newHolding.Classification(), Eq(THE_TRIAL_CLASSIFICATION));
    ASSERT_THAT(newHolding.CopyNumber(), Eq(holding->CopyNumber()));
-   ASSERT_THAT(IsAvailableAt(&newHolding, EAST_BRANCH), Eq(true));
+   ASSERT_TRUE(IsAvailableAt(&newHolding, EAST_BRANCH));
 }
 
 TEST_F(HoldingTest, TransferMakesHoldingAvailableAtBranch)
 {
    holding->Transfer(EAST_BRANCH);
 
-    ASSERT_THAT(IsAvailableAt(holding, EAST_BRANCH), Eq(true));
+    ASSERT_TRUE(IsAvailableAt(holding, EAST_BRANCH));
 }
 
 TEST_F(HoldingTest, BarCodeCombinesClassificationAndCopyNumber)
@@ -133,21 +133,21 @@ TEST_F(HoldingTest, AreEqualWhenClassificationAndCopyMatch)
 {
    Holding copy(holding->Classification(), holding->CopyNumber());
 
-    ASSERT_THAT(*holding == copy, Eq(true));
+    ASSERT_TRUE(*holding == copy);
 }
 
 TEST_F(HoldingTest, AreUnequalWhenCopyDoesNotMatch)
 {
    Holding extraCopy(holding->Classification(), holding->CopyNumber() + 1);
 
-    ASSERT_THAT(*holding != extraCopy, Eq(true));
+    ASSERT_TRUE(*holding != extraCopy);
 }
 
 TEST_F(HoldingTest, AreUnequalWhenClassificationDoesNotMatch)
 {
    Holding differentBook(holding->Classification() + "X", 1);
 
-    ASSERT_THAT(*holding != differentBook, Eq(true));
+    ASSERT_TRUE(*holding != differentBook);
 }
 
 TEST_F(HoldingTest, IsLessThanWhenClassificationsAreLessThan)
@@ -155,7 +155,7 @@ TEST_F(HoldingTest, IsLessThanWhenClassificationsAreLessThan)
     Holding a("A:1");
     Holding b("B:1");
 
-   ASSERT_THAT(a < b, Eq(true));
+   ASSERT_TRUE(a < b);
 }
 
 TEST_F(HoldingTest, IsNotLessThanWhenClassificationIsNotLessThan)
@@ -163,7 +163,7 @@ TEST_F(HoldingTest, IsNotLessThanWhenClassificationIsNotLessThan)
     Holding a("A:1");
     Holding b("B:1");
 
-    ASSERT_THAT(!(b < a), Eq(true));
+    ASSERT_TRUE(!(b < a));
 }
 
 TEST_F(HoldingTest, IsNotLessThanWhenBarcodesAreEqual)
@@ -171,7 +171,7 @@ TEST_F(HoldingTest, IsNotLessThanWhenBarcodesAreEqual)
     Holding a("A:1");
     Holding aCopy("A:1");
 
-    ASSERT_THAT(a < aCopy, Eq(false));
+    ASSERT_FALSE(a < aCopy);
 }
 
 TEST_F(HoldingTest, ck)
@@ -181,7 +181,7 @@ TEST_F(HoldingTest, ck)
    date checkoutOn(2007, Mar, 1);
    holding->CheckOut(checkoutOn);
 
-   ASSERT_THAT(holding->IsAvailable(), Eq(false));
+   ASSERT_FALSE(holding->IsAvailable());
 
    ASSERT_THAT(holding->LastCheckedOutOn(), Eq(checkoutOn));
 
@@ -195,11 +195,11 @@ TEST_F(HoldingTest, Availability)
 {
    holding->Transfer(EAST_BRANCH);
    holding->CheckOut(ArbitraryDate);
-   EXPECT_THAT(holding->IsAvailable(), Eq(false));
+   EXPECT_FALSE(holding->IsAvailable());
 
    date nextDay = ArbitraryDate + date_duration(1);
    holding->CheckIn(nextDay, EAST_BRANCH);
-   EXPECT_THAT(holding->IsAvailable(), Eq(true));
+   EXPECT_TRUE(holding->IsAvailable());
 }
 //END:Availability
 
@@ -230,7 +230,7 @@ TEST_F(HoldingTest, UnavailableOnCheckout)
 
     holding->CheckOut(ArbitraryDate);
 
-    ASSERT_THAT(holding->IsAvailable(), Eq(false));
+    ASSERT_FALSE(holding->IsAvailable());
 }
 
 TEST_F(HoldingTest, UpdatesCheckoutDateOnCheckout)
@@ -255,7 +255,7 @@ public:
 TEST_F(ACheckedInHolding, UpdatesDateDueOnCheckout)
 {
 //START_HIGHLIGHT
-   ASSERT_THAT(IsAvailableAt(holding, *arbitraryBranch), Eq(true));
+   ASSERT_TRUE(IsAvailableAt(holding, *arbitraryBranch));
 //END_HIGHLIGHT
    holding->CheckOut(ArbitraryDate);
 
@@ -284,7 +284,7 @@ TEST_F(HoldingTest, Ckin)
    Branch branch2("2", "branch2");
    holding->CheckIn(checkinOn, branch2);
 
-   ASSERT_THAT(IsAvailableAt(holding, branch2), Eq(true));
+   ASSERT_TRUE(IsAvailableAt(holding, branch2));
 }
 
 TEST_F(HoldingTest, CheckinMakesBookAvailableAtAnotherBranch)
@@ -295,7 +295,7 @@ TEST_F(HoldingTest, CheckinMakesBookAvailableAtAnotherBranch)
    holding->CheckIn(
        ArbitraryDate + date_duration(1), WEST_BRANCH);
 
-   ASSERT_THAT(IsAvailableAt(holding, WEST_BRANCH), Eq(true));
+   ASSERT_TRUE(IsAvailableAt(holding, WEST_BRANCH));
 }
 
 class AMovieHolding: public HoldingTest {
