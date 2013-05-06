@@ -6,40 +6,40 @@ using namespace testing;
 
 TEST(BarcodeUtilTest, BranchCodesStartWithB)
 {
-    ASSERT_THAT(BarcodeUtil::IsBranchId("b123"), Eq(true));
+    ASSERT_TRUE(BarcodeUtil::IsBranchId("b123"));
 }
 
 TEST(BarcodeUtilTest, IsBranchIdReturnsFalseWhenStartsWithOtherCharacter)
 {
-    ASSERT_THAT(BarcodeUtil::IsBranchId("p123"), Eq(false));
+    ASSERT_FALSE(BarcodeUtil::IsBranchId("p123"));
 }
 
 TEST(BarcodeUtilTest, IgnoresCaseWhenTestingFirstCharacterForBranch)
 {
-    ASSERT_THAT(BarcodeUtil::IsBranchId("B123"), Eq(true));
+    ASSERT_TRUE(BarcodeUtil::IsBranchId("B123"));
 }
 
 TEST(BarcodeUtilTest, PatronIdsStartWithP)
 {
-    ASSERT_THAT(BarcodeUtil::IsPatronId("p123"), Eq(true));
+    ASSERT_TRUE(BarcodeUtil::IsPatronId("p123"));
 }
 
 TEST(BarcodeUtilTest, IsPatronIdReturnsFalseWhenStartsWithOtherCharacter)
 {
-    ASSERT_THAT(BarcodeUtil::IsPatronId("b123"), Eq(false));
+    ASSERT_FALSE(BarcodeUtil::IsPatronId("b123"));
 }
 
 TEST(BarcodeUtilTest, IgnoresCaseWhenTestingFirstCharacterForPatron)
 {
-    ASSERT_THAT(BarcodeUtil::IsPatronId("P123"), Eq(true));
+    ASSERT_TRUE(BarcodeUtil::IsPatronId("P123"));
 }
 
 TEST(BarcodeUtilTest, HoldingBarcodesContainColon)
 {
-    ASSERT_THAT(BarcodeUtil::IsHoldingBarcode("qa123:1"), Eq(true));
+    ASSERT_TRUE(BarcodeUtil::IsHoldingBarcode("qa123:1"));
 }
 
 TEST(BarcodeUtilTest, IsHoldingBarcodeReturnsFalseWhenNoColonContained)
 {
-    ASSERT_THAT(BarcodeUtil::IsHoldingBarcode("zz123 2"), Eq(false));
+    ASSERT_FALSE(BarcodeUtil::IsHoldingBarcode("zz123 2"));
 }
