@@ -43,7 +43,7 @@ TEST(BookTest, IsEqualToCopyConstructedInstance)
 {
    Book copy(THE_TRIAL);
 
-    ASSERT_THAT(THE_TRIAL == copy, Eq(true));
+    ASSERT_TRUE(THE_TRIAL == copy);
 }
 
 TEST(BookTest, IsNotEqualWhenTitleDiffers)
@@ -51,7 +51,7 @@ TEST(BookTest, IsNotEqualWhenTitleDiffers)
    Book book(
       THE_TRIAL_TITLE + "x", THE_TRIAL_AUTHOR, 
       THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION);
-   ASSERT_THAT(THE_TRIAL != book, Eq(true));
+   ASSERT_TRUE(THE_TRIAL != book);
 }
     
 TEST(BookTest, IsNotEqualWhenAuthorDiffers)
@@ -59,7 +59,7 @@ TEST(BookTest, IsNotEqualWhenAuthorDiffers)
    Book book(
       THE_TRIAL_TITLE, THE_TRIAL_AUTHOR + "x", 
       THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION);
-   ASSERT_THAT(THE_TRIAL != book, Eq(true));
+   ASSERT_TRUE(THE_TRIAL != book);
 }
 
 TEST(BookTest, IsNotEqualWhenYearDiffers)
@@ -67,7 +67,7 @@ TEST(BookTest, IsNotEqualWhenYearDiffers)
    Book book(
       THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
       THE_TRIAL_YEAR + 1, THE_TRIAL_CLASSIFICATION);
-   ASSERT_THAT(THE_TRIAL != book, Eq(true));
+   ASSERT_TRUE(THE_TRIAL != book);
 }
 
 TEST(BookTest, IsNotEqualWhenClassificationDiffers)
@@ -75,7 +75,7 @@ TEST(BookTest, IsNotEqualWhenClassificationDiffers)
    Book book(
       THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
       THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION + "x");
-   ASSERT_THAT(THE_TRIAL != book, Eq(true));
+   ASSERT_TRUE(THE_TRIAL != book);
 }
 
 TEST(BookTest, IsNotEqualWhenTypeDiffers)
@@ -84,7 +84,7 @@ TEST(BookTest, IsNotEqualWhenTypeDiffers)
       THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
       THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION, 
       Book::TYPE_MOVIE);
-   ASSERT_THAT(THE_TRIAL != book6, Eq(true));
+   ASSERT_TRUE(THE_TRIAL != book6);
 }
 
 TEST(BookTest, LessThanBasedOnClassification)
@@ -94,5 +94,5 @@ TEST(BookTest, LessThanBasedOnClassification)
     Book a("", "", 0, classificationA);
     Book b("", "", 0, classificationB);
 
-    ASSERT_THAT(a < b, Eq(true));
+    ASSERT_TRUE(a < b);
 }
