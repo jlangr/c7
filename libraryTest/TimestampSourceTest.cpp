@@ -40,14 +40,14 @@ TEST_F(TimestampSourceTest, RetrievesMultiplePushedTimes)
 
 TEST_F(TimestampSourceTest, IsExhaustedWhenNoTimeQueued)
 {
-    ASSERT_THAT(TimestampSource::IsExhausted(), Eq(true));
+    ASSERT_TRUE(TimestampSource::IsExhausted());
 }
 
 TEST_F(TimestampSourceTest, IsNotExhaustedWhenTimeQueued)
 {
     TimestampSource::QueueNextTime(NEW_YEARS_DAY);
 
-    ASSERT_THAT(TimestampSource::IsExhausted(), Eq(false));
+    ASSERT_FALSE(TimestampSource::IsExhausted());
 }
 
 TEST_F(TimestampSourceTest, ClearExhaustsQueue)
@@ -56,7 +56,7 @@ TEST_F(TimestampSourceTest, ClearExhaustsQueue)
 
     TimestampSource::ClearQueue();
 
-    ASSERT_THAT(TimestampSource::IsExhausted(), Eq(true));
+    ASSERT_TRUE(TimestampSource::IsExhausted());
 }
 
 TEST_F(TimestampSourceTest, ReturnsCurrentTimeWhenQueueExhausted)
