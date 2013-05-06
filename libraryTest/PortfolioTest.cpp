@@ -30,7 +30,7 @@ const string PortfolioTest::Apple("AAPl");
 
 TEST_F(PortfolioTest, IsEmptyOnCreation)
 {
-    ASSERT_THAT(portfolio.IsEmpty(), Eq(true));
+    ASSERT_TRUE(portfolio.IsEmpty());
 }
 
 TEST_F(PortfolioTest, SizeIsZeroOnCreation)
