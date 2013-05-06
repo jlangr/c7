@@ -55,7 +55,7 @@ TEST_F(CatalogTest, FindByBarCodeAnswersFalseWhenNotFound)
 {
     Holding holding(THE_TRIAL_CLASSIFICATION, 1);
 
-    ASSERT_THAT(catalog.FindByBarCode(holding), Eq(false));
+    ASSERT_FALSE(catalog.FindByBarCode(holding));
 }
 
 TEST_F(CatalogTest, AddedHoldingCanBeRetrieved)
@@ -63,7 +63,7 @@ TEST_F(CatalogTest, AddedHoldingCanBeRetrieved)
     catalog.Add(*theTrialHolding);
     Holding retrieved(theTrialHolding->Classification(), theTrialHolding->CopyNumber());
 
-    ASSERT_THAT(catalog.FindByBarCode(retrieved), Eq(true));
+    ASSERT_TRUE(catalog.FindByBarCode(retrieved));
 }
 
 TEST_F(CatalogTest, FindByBarCodePopulatesMembers)

@@ -20,5 +20,5 @@ public:
 
 TEST_F(KeyedFilePersistenceTest, TestOfMyOwn) // note TEST_F, not TEST_P
 {
-    ASSERT_THAT(true, Eq(true));
+    ASSERT_TRUE(true);
 }
