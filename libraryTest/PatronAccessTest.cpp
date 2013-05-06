@@ -44,7 +44,7 @@ TEST_F(PatronAccessTest, IncrementsSizeOnAdd)
 TEST_F(PatronAccessTest, FindAnswersFalseForNonexistentPatron) 
 {
 	Patron patron("nobody");
-	ASSERT_THAT(access.Find(patron), Eq(false));
+	ASSERT_FALSE(access.Find(patron));
 }
 
 TEST_F(PatronAccessTest, FindAnswerTrueForSavedPatron)
@@ -53,7 +53,7 @@ TEST_F(PatronAccessTest, FindAnswerTrueForSavedPatron)
 	access.Save(patron1);
 
 	Patron retrieved("patron1");
-	ASSERT_THAT(access.Find(retrieved), Eq(true));
+	ASSERT_TRUE(access.Find(retrieved));
 }
 
 TEST_F(PatronAccessTest, SaveIsPersistentAcrossAccessInstances)
@@ -63,7 +63,7 @@ TEST_F(PatronAccessTest, SaveIsPersistentAcrossAccessInstances)
 
 	PatronAccess newAccess;
 	Patron retrieved("patron1");
-	ASSERT_THAT(newAccess.Find(retrieved), Eq(true));
+	ASSERT_TRUE(newAccess.Find(retrieved));
 }
 	
 TEST_F(PatronAccessTest, SavePersistsAllAttributes)
