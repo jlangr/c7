@@ -21,14 +21,14 @@ TEST(BookTest, PopulatesAllFieldsOnConstruction)
 }
 
 //START:CtorFieldInit
-TEST(BookTest, NoArgConstructorInitializesFieldsToDefault)
+TEST(BookTest, DefaultConstructorInitializesFieldsToDefault)
 {
    Book book;
 
    ASSERT_THAT(book.Title(), Eq(""));
    ASSERT_THAT(book.Author(), Eq(""));
    ASSERT_THAT(book.Year(), Eq(0));
-   ASSERT_THAT("", Eq(book.Classification()));
+   ASSERT_THAT(book.Classification(), Eq(""));
 }
 //END:CtorFieldInit
 
@@ -43,47 +43,47 @@ TEST(BookTest, IsEqualToCopyConstructedInstance)
 {
    Book copy(THE_TRIAL);
 
-    ASSERT_TRUE(THE_TRIAL == copy);
+   ASSERT_TRUE(THE_TRIAL == copy);
 }
 
 TEST(BookTest, IsNotEqualWhenTitleDiffers)
 {
    Book book(
-      THE_TRIAL_TITLE + "x", THE_TRIAL_AUTHOR, 
-      THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION);
+   	THE_TRIAL_TITLE + "x", THE_TRIAL_AUTHOR, 
+   	THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION);
    ASSERT_TRUE(THE_TRIAL != book);
 }
     
 TEST(BookTest, IsNotEqualWhenAuthorDiffers)
 {
    Book book(
-      THE_TRIAL_TITLE, THE_TRIAL_AUTHOR + "x", 
-      THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION);
+   	THE_TRIAL_TITLE, THE_TRIAL_AUTHOR + "x", 
+   	THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION);
    ASSERT_TRUE(THE_TRIAL != book);
 }
 
 TEST(BookTest, IsNotEqualWhenYearDiffers)
 {
    Book book(
-      THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
-      THE_TRIAL_YEAR + 1, THE_TRIAL_CLASSIFICATION);
+   	THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
+   	THE_TRIAL_YEAR + 1, THE_TRIAL_CLASSIFICATION);
    ASSERT_TRUE(THE_TRIAL != book);
 }
 
 TEST(BookTest, IsNotEqualWhenClassificationDiffers)
 {
    Book book(
-      THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
-      THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION + "x");
+   	THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
+   	THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION + "x");
    ASSERT_TRUE(THE_TRIAL != book);
 }
 
 TEST(BookTest, IsNotEqualWhenTypeDiffers)
 {
    Book book6(
-      THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
-      THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION, 
-      Book::TYPE_MOVIE);
+   	THE_TRIAL_TITLE, THE_TRIAL_AUTHOR, 
+   	THE_TRIAL_YEAR, THE_TRIAL_CLASSIFICATION, 
+   	Book::TYPE_MOVIE);
    ASSERT_TRUE(THE_TRIAL != book6);
 }
 
