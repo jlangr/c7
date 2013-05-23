@@ -21,14 +21,14 @@ public:
     Holding* theTrialHolding;
     Holding* catch22Holding;
 
-    virtual void SetUp() 
+    virtual void SetUp() override 
     {
         jane = new Patron("Jane", 1);
         theTrialHolding = new Holding(THE_TRIAL_CLASSIFICATION, 1);
         catch22Holding = new Holding(CATCH22_CLASSIFICATION, 1);
     }
 
-    virtual void TearDown() 
+    virtual void TearDown() override 
     {
         delete jane;
         delete theTrialHolding;
