@@ -19,11 +19,11 @@ class ScannerStateWaitingTest : public Test, public TestScanner
 public:
     ScannerState* state;
     
-    virtual void SetUp() {
+    virtual void SetUp() override {
         state = new ScannerStateWaiting(scanner);
     }
 
-    virtual void TearDown() {
+    virtual void TearDown() override {
         delete state;
     }
 };
