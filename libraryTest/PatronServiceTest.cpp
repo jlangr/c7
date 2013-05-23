@@ -27,14 +27,14 @@ public:
     Patron* jane;
     StubCreditVerifier verifier;
 
-    virtual void SetUp()
+    virtual void SetUp() override
     {
         PatronService::DeleteAll();
         joe = new Patron("Joe", 1);
         jane = new Patron("Jane", 2);
     }
 
-    virtual void TearDown()
+    virtual void TearDown() override
     {
         delete jane;
         delete joe;
