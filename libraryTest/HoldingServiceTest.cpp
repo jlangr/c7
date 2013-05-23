@@ -28,7 +28,7 @@ public:
     HoldingService holdingService;
     date* arbitraryDate;
 
-	virtual void SetUp()
+	virtual void SetUp() override
 	{
 		HoldingService::DeleteAll();
         PatronService::DeleteAll();
@@ -42,7 +42,7 @@ public:
         branchService.Add(*branch2);
 	}
 
-	virtual void TearDown()
+	virtual void TearDown() override
 	{
 		delete branch1;
 		delete branch2;
