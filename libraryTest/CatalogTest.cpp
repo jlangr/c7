@@ -22,7 +22,7 @@ public:
     Holding* catch22Holding;
     Holding* catch22HoldingCopy2;
 
-	virtual void SetUp()
+	virtual void SetUp() override
 	{
 		Catalog::DeleteAll();
 		theTrialHolding = new Holding(THE_TRIAL_CLASSIFICATION, 1);
@@ -30,7 +30,7 @@ public:
         catch22HoldingCopy2 = new Holding(CATCH22_CLASSIFICATION, 2);
 	}
 
-	virtual void TearDown()
+	virtual void TearDown() override
 	{
 		delete theTrialHolding;
 		delete catch22Holding;
