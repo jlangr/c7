@@ -27,7 +27,7 @@ public:
     vector<Branch> noBranches;
     Branch* eastBranch;
 
-    virtual void SetUp()
+    virtual void SetUp() override
 	{
         branchAccess = new BranchAccess();
         branchAccess->DeleteAll();
@@ -37,7 +37,7 @@ public:
         access.DeleteAll();
     }
 
-	virtual void TearDown()
+	virtual void TearDown() override
 	{
         branchAccess->DeleteAll();
         delete branchAccess;
