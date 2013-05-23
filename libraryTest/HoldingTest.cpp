@@ -19,13 +19,13 @@ public:
    Holding* holding;
    static const date ArbitraryDate;
    Branch* arbitraryBranch;
-   virtual void SetUp()
+   virtual void SetUp() override
    {
       holding = new Holding(THE_TRIAL_CLASSIFICATION, 1);
       arbitraryBranch = new Branch(EAST_BRANCH);
    }
 
-   virtual void TearDown()
+   virtual void TearDown() override
    {
       delete holding;
       delete arbitraryBranch;
@@ -245,7 +245,7 @@ TEST_F(HoldingTest, UpdatesCheckoutDateOnCheckout)
 class ACheckedInHolding: public HoldingTest
 {
 public:
-   void SetUp() {
+   void SetUp() override {
       HoldingTest::SetUp();
       MakeAvailableAtABranch(holding);
    }

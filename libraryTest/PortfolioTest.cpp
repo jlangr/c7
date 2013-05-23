@@ -20,8 +20,6 @@ public:
         ASSERT_THAT(portfolio.Size(), Eq(expected));
         ASSERT_THAT(portfolio.IsEmpty(), Eq(expected == 0));
     }
-    void SetUp() {}
-    void TearDown() {}
 };
 
 const string PortfolioTest::Symantec("SYMC");
