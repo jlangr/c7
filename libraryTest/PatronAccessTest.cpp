@@ -17,12 +17,12 @@ class PatronAccessTest: public Test
 public:
 	PatronAccess access;
 
-	virtual void SetUp()
+	virtual void SetUp() override
 	{
 		PatronAccess::DeleteAll();
 	}
 
-	virtual void TearDown()
+	virtual void TearDown() override
 	{
 		PatronAccess::DeleteAll();
 	}
