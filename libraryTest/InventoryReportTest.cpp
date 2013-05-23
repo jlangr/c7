@@ -32,7 +32,7 @@ public:
     LibraryOfCongressAPI* api;
     InventoryReport* report;
 
-    void SetUp()
+    void SetUp() override
     {
         api = new StubLibraryOfCongressAPI();
         report = new InventoryReport(&catalog, api);
@@ -55,7 +55,7 @@ public:
         catalog.Add(*cash);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete trial1;
         delete trial2;

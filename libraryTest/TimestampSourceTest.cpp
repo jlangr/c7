@@ -12,11 +12,10 @@ public:
     static date NEW_YEARS_DAY;
     static date GROUNDHOG_DAY;
 
-    virtual void SetUp() 
+    virtual void SetUp() override
     {
         TimestampSource::ClearQueue();
     }
-    virtual void TearDown() {}
 };
 
 date TimestampSourceTest::NEW_YEARS_DAY(2013, Jan, 1);

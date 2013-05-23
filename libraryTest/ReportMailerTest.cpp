@@ -24,7 +24,7 @@ class ReportMailerTest: public Test
 public:
     vector<MailDestination> destinations;
 
-    virtual void SetUp()
+    virtual void SetUp() override
     {
         MailDestination destination("address");
         destinations.push_back(destination);

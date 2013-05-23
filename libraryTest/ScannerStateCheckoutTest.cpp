@@ -20,7 +20,7 @@ class ScannerStateCheckoutTest : public Test, public TestScanner
 public:
     ScannerStateCheckout* state;
 
-    virtual void SetUp() {
+    virtual void SetUp() override {
         state = new ScannerStateCheckout(scanner);
         scanner->SetCurrentState(state);
     }
