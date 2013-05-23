@@ -18,12 +18,9 @@ class ScannerStateInventoryTest : public Test, public TestScanner
 public:
     ScannerStateInventory* state;
 
-    virtual void SetUp() {
+    virtual void SetUp() override {
         state = new ScannerStateInventory(scanner);
         scanner->SetCurrentState(state);
-    }
-
-    virtual void TearDown() {
     }
 };
 
