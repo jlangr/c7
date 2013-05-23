@@ -22,12 +22,9 @@ class ScannerStateCheckinTest : public Test, public TestScanner
 public:
     ScannerStateCheckin* state;
 
-    virtual void SetUp() {
+    virtual void SetUp() override {
         state = new ScannerStateCheckin(scanner);
         scanner->SetCurrentState(state);
-    }
-
-    virtual void TearDown() {
     }
 };
 
