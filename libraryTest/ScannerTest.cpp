@@ -34,7 +34,7 @@ public:
     MockState* state;
     MockDisplayListener* display;
 
-    virtual void SetUp()
+    virtual void SetUp() override
     {
         display = new MockDisplayListener();
         scanner = new Scanner(display, NULL);
@@ -42,7 +42,7 @@ public:
         scanner->SetCurrentState(state);
     }
 
-    virtual void TearDown()
+    virtual void TearDown() override
     {
         delete scanner;
         delete display;

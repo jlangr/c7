@@ -17,7 +17,7 @@ public:
     TestSerializable* objectWithId1;
     TestSerializable* objectWithId2;
 
-    void SetUp() 
+    void SetUp() override 
     {
         persister = (*InjectedFactoryFunction())();
         persister->Clear();
@@ -30,7 +30,7 @@ public:
         return GetParam();
     }
 
-    void TearDown()
+    void TearDown() override
     {
         persister->Clear();
         delete objectWithId2;

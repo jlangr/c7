@@ -13,14 +13,14 @@ public:
     Branch* westBranch;
     BranchService service;
 
-    virtual void SetUp()
+    virtual void SetUp() override
     {
         BranchService::DeleteAll();
         eastBranch = new Branch("1", "east");
         westBranch = new Branch("2", "west");
     }
 
-    virtual void TearDown()
+    virtual void TearDown() override
     {
         delete eastBranch;
         delete westBranch;
