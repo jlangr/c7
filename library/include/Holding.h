@@ -13,6 +13,7 @@ public:
    Holding();
    explicit Holding(const std::string& barcode);
    Holding(const std::string& classification, unsigned short copyNumber);
+   Holding(Holding& holding, unsigned short copyNumber);
    virtual ~Holding();
 
    static std::string ConstructBarcode(const std::string& classification, const int& copyNumber);

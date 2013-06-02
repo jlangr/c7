@@ -60,6 +60,21 @@ TEST_F(HoldingTest, BarcodeRequiresColon)
     ASSERT_THROW(Holding("A"), InvalidBarcodeException);
 }
 
+// START:CanBeCreatedFromAnother
+TEST_F(AHolding, CanBeCreatedFromAnother) 
+{
+   Holding holding(THE_TRIAL_CLASSIFICATION, 1);
+   holding.Transfer(EAST_BRANCH);
+
+   Holding copy(holding, 2);
+
+   ASSERT_THAT(copy.Classification(), Eq(THE_TRIAL_CLASSIFICATION));
+   ASSERT_THAT(copy.CopyNumber(), Eq(2));
+   ASSERT_THAT(copy.CurrentBranch(), Eq(EAST_BRANCH));
+   ASSERT_TRUE(copy.LastCheckedOutOn().is_not_a_date());
+}
+// END:CanBeCreatedFromAnother
+
 TEST_F(HoldingTest, CanExtractClassificationWhenCreatedWithBarcode)
 {
     Holding holding(Holding::ConstructBarcode("A123", 3));
