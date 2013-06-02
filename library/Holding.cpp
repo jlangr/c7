@@ -38,6 +38,14 @@ Holding::Holding(const string& classification, unsigned short copyNumber)
 {
 }
 
+Holding::Holding(Holding& holding, unsigned short copyNumber)
+   : mClassification(holding.Classification())
+   , mCopyNumber(copyNumber)
+   , mBranch(holding.CurrentBranch())
+//   , mLastCheckedOutOn(holding.LastCheckedOutOn())
+{
+}
+
 Holding::Holding()
 	: mClassification("")
 	, mCopyNumber(1)
