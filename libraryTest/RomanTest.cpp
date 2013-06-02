@@ -2,7 +2,7 @@
 #include "RomanConverter.h"
 
 //START:Roman
-TEST(RomanTest, Convert)
+TEST(ARomanConverter, AnswersArabicEquivalents)
 {
    RomanConverter converter;
    ASSERT_EQ("I", converter.convert(1));
